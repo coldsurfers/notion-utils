@@ -28,12 +28,31 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "2.8.1",
+    "release-it": "^17.0.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "@notionhq/client": "^2.2.14"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prerelease": "yarn build",
+    "prerelease:rc": "yarn build",
+    "release": "release-it minor --ci",
+    "release:rc": "release-it --ci --preRelease=rc"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release @coldsurfers/notion-utils v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "hooks": {
+      "after:git:release": "git reset --hard HEAD"
+    }
   }
 }
