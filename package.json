@@ -1,7 +1,19 @@
 {
   "name": "@coldsurfers/notion-utils",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "license": "MIT",
   "devDependencies": {
     "@notionhq/client": "^2.2.14",
