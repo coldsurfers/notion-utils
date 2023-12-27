@@ -7,10 +7,10 @@ const notion = new Client({
 });
 
 interface GetDatabaseParams {
-  platform: "surflog" | "techlog";
+  platform?: "surflog" | "techlog" | "all";
 }
 
-export const getDatabase = async (params: GetDatabaseParams) => {
+export const getDatabase = async ({ platform = "all" }: GetDatabaseParams) => {
   const response = await notion.databases.query({
     database_id: databaseId,
     sorts: [
@@ -22,7 +22,7 @@ export const getDatabase = async (params: GetDatabaseParams) => {
     filter: {
       property: "platform",
       multi_select: {
-        contains: params.platform,
+        contains: platform,
       },
     },
   });
