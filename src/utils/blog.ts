@@ -33,9 +33,26 @@ const blogUtils = {
     });
     return response.results;
   },
-  getPostDetail: async (pageId: string) => {
+  getPostDetailByPageId: async (pageId: string) => {
     const response = await notion.pages.retrieve({ page_id: pageId });
     return response;
+  },
+  getPostDetailBySlug: async (slug: string) => {
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      filter: {
+        property: "Slug",
+        formula: {
+          string: {
+            equals: slug,
+          },
+        },
+      },
+    });
+    if (response?.results?.length) {
+      return response?.results?.[0];
+    }
+    return {};
   },
 };
 
