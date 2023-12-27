@@ -11,6 +11,15 @@ interface GetDatabaseParams {
 }
 
 export const getDatabase = async ({ platform = "all" }: GetDatabaseParams) => {
+  const platformFilter =
+    platform === "all"
+      ? undefined
+      : {
+          property: "platform",
+          multi_select: {
+            contains: platform,
+          },
+        };
   const response = await notion.databases.query({
     database_id: databaseId,
     sorts: [
@@ -19,12 +28,7 @@ export const getDatabase = async ({ platform = "all" }: GetDatabaseParams) => {
         direction: "descending",
       },
     ],
-    filter: {
-      property: "platform",
-      multi_select: {
-        contains: platform,
-      },
-    },
+    filter: platformFilter,
   });
   return response.results;
 };
